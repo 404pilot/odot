@@ -4,10 +4,7 @@ describe "Adding todo items" do
   let!(:todo_list) { TodoList.create(title: "defaultTitleForTest", description: "defaultDescriptionForTest") }
 
   def visit_todo_list_and_click_save(list, content)
-    visit "/todo_lists"
-    within "#todo_list_#{list.id}" do
-        click_link "List Items"
-    end
+    visit_todo_list(list)
 
     click_link "New Todo item"
     fill_in "Content", with: content
