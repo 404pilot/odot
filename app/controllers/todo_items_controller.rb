@@ -1,16 +1,15 @@
 class TodoItemsController < ApplicationController
+  before_action :find_todo_list
+
   def index
-    @todo_list = TodoList.find(params[:todo_list_id])
   end
 
   def new # just create new page GET
-    @todo_list = TodoList.find(params[:todo_list_id])
     # create a unsaved object
     @todo_item = @todo_list.todo_items.new
   end
 
   def create # the page to save object # POST
-    @todo_list = TodoList.find(params[:todo_list_id])
     # new ~= create_or_update
     @todo_item = @todo_list.todo_items.new(todo_item_params)
 
@@ -26,12 +25,10 @@ class TodoItemsController < ApplicationController
   # edit -> show edit page GET, update -> update object in database POST
 
   def edit
-    @todo_list = TodoList.find(params[:todo_list_id])
     @todo_item = @todo_list.todo_items.find(params[:id])
   end
 
   def update
-    @todo_list = TodoList.find(params[:todo_list_id])
     @todo_item = @todo_list.todo_items.find(params[:id])
 
     # find original item first, then update it
@@ -49,6 +46,10 @@ class TodoItemsController < ApplicationController
   end
 
   private
+
+  def find_todo_list
+    @todo_list = TodoList.find(params[:todo_list_id])
+  end
 
   def todo_item_params
     params[:todo_item].permit(:content)
