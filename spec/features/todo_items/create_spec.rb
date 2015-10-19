@@ -16,7 +16,7 @@ describe "Adding todo items" do
 
     expect(page).to have_content("Added todo list item.")
 
-    within("ul.todo_items") do
+    within("#todo_item_#{todo_list.id}") do
       expect(page).to have_content("defaultContentForTest")
     end
   end
